@@ -13,7 +13,10 @@ class ForgetPasswordController extends Controller
         $user = User::where('email', $input)->first();
         $user->notify(new ResetPasswordVerificationNotification());
         $success['success'] = true;
-        return response()->json($success,200);
+        return response()->json([
+            'message' => 'Please kindly check Email , An Otp has been sent to change password.',
+             'data' => $success,200
+            ]);
 
     }
 }

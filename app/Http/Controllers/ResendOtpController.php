@@ -14,7 +14,10 @@ class ResendOtpController extends Controller
         $user = User::where('email', $input)->first();
         $user->notify(new ResendOtpNotification());
         $success['success'] = true;
-        return response()->json($success,200);
+        return response()->json([
+            'message' => 'Otp Resent Successfully.',
+             'data' => $success,200
+            ]);
 
     }
 }

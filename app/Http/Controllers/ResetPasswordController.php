@@ -26,7 +26,10 @@ class ResetPasswordController extends Controller
             $user->update(['password' => Hash::make($request->password)]);
             $user->tokens()->delete();
             $success['success'] = true;
-            return response()->json($success, 200);
+            return response()->json([
+                'message' => 'Password Changed Successfully.',
+                 'data' => $success,200
+                ]);
 
 
 
