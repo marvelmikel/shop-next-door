@@ -33,8 +33,8 @@
               <h6 class="font-weight-light">Sign in to continue.</h6>
 
 
-              @if (Session::has('error_message'))
-              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              @if(Session::has('error_message'))
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <strong>Error:</strong>{{ Session::get('error_message') }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="close">
                     <span aria-hidden="true">&times;</span>
@@ -42,13 +42,23 @@
               </div>
               @endif
 
+              @if ($errors->any())
+              <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $errors)
+                    <li>{{ $errors }}</li>
+                    @endforeach
+                </ul>
+              </div>
+              @endif
+
               <form class="pt-3" action="{{ url('admin/login') }}" method="post">
                 @csrf
                 <div class="form-group">
-                  <input type="email" name="email"  class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Email" required="">
+                  <input type="email" name="email"  class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Email" >
                 </div>
                 <div class="form-group">
-                  <input type="password" name="password"  class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password" required="">
+                  <input type="password" name="password"  class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password" >
                 </div>
                 <div class="mt-3">
                     <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">SIGN IN</button>
