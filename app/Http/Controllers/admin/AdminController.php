@@ -51,16 +51,26 @@ class AdminController extends Controller
         }
 
     }
-    public function checkAdminconfirmPassword(Request $request){
-        $data = $request->all();
-        // echo "<pre>"; print_r($data); die;
-        if(Hash::check($data['confirm_password'], Auth::guard('admin')->user()->new_password)){
-            return "true";
-        }else{
-            return "false";
-        }
 
+    public function updateAdminDetails(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            // echo "<pre>"; print_r($data); die;
+
+            $rules = [
+                'admin_name' => 'required|regex:/^[\pL\s\-]+$/u',
+                'admin_mobile' => 'required|numeric',
+            ];
+            $this->validate($request, $rules); 
+            //Update Admin Details
+            Admin::where('id',Auth::guard('admin')->user()->id)->update(['name'=>$data['admin_name'],
+             'mobile'=>$data['admin_mobile'], 'email'=>$data['admin_email'], 'image'=>$data['admin_image']]);
+             return redirect()->back()->with('success_message', 'Admin Details Updated Successfully!');
+        }
+        return view('admin.settings.update_admin_details');
     }
+
+
 
 
     public function login(Request $request){

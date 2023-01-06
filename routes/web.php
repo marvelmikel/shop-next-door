@@ -44,7 +44,10 @@ Route::get('dashboard', 'AdminController@dashboard');
 Route::match(['get','post'], 'update-admin-password', 'AdminController@updateAdminPassword');
 
 //Check Admin Password
-Route::post( 'check-admin-password', 'AdminController@checkAdminPassword');
+Route::post('check-admin-password', 'AdminController@checkAdminPassword');
+
+//Update Admin Details
+Route::Match(['get', 'post'], 'update-admin-details','AdminController@updateAdminDetails');
 
 // Admin logout
 Route::get('logout', 'AdminController@logout');

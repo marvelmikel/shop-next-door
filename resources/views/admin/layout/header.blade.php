@@ -73,11 +73,11 @@
                 <img src="{{ url('admin/images/faces/face28.jpg')}}" alt="profile"/>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                    <a href="{{ url ('admin/') }}" class="dropdown-item">
+                    <a href="{{ url ('admin/update-admin-details') }}" class="dropdown-item">
                     <i class="ti-settings text-primary"></i>
                     Settings
                     </a>
-                    <a href="{{ url('admin/login') }}" class="dropdown-item">
+                    <a href="{{ url('admin/logout') }}" class="dropdown-item">
                     <i class="ti-power-off text-primary"></i>
                     Logout
                     </a>
