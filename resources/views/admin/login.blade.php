@@ -42,6 +42,8 @@
               </div>
               @endif
 
+              
+
               @if ($errors->any())
               <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     @foreach ($errors->all() as $errors)
