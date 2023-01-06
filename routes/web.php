@@ -40,6 +40,12 @@ Route::group(['middleware' => ['admin']], function(){
     // Admin Dashboard Route
 Route::get('dashboard', 'AdminController@dashboard');
 
+//Update Admin Password
+Route::match(['get','post'], 'update-admin-password', 'AdminController@updateAdminPassword');
+
+//Check Admin Password
+Route::post( 'check-admin-password', 'AdminController@checkAdminPassword');
+
 // Admin logout
 Route::get('logout', 'AdminController@logout');
 

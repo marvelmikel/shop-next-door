@@ -8,10 +8,30 @@ use App\Models\Admin;
 use Hash;
 use Auth;
 
+
 class AdminController extends Controller
 {
     public function dashboard(){
         return view('admin.dashboard');
+    }
+
+    public function updateAdminPassword(){
+        // echo "<pre>"; print_r(Auth::guard('admin')->user()); die;
+
+        $adminDetails = Admin::where('email', Auth::guard('admin')->user()->email)->first()->toArray();
+        return view('admin.settings.update_admin_password')->with(compact('adminDetails'));
+
+    }
+
+    public function checkAdminPassword(Request $request){
+        $data = $request->all();
+        // echo "<pre>"; print_r($data); die;
+        if(Hash::check($data['current_password'], Auth::guard('admin')->user()->password)){
+            return "true";
+        }else{
+            return "false";
+        }
+
     }
 
     public function login(Request $request){
@@ -37,4 +57,6 @@ class AdminController extends Controller
         Auth::guard('admin')->logout();
         return redirect('admin/login');
     }
+
+
 }
