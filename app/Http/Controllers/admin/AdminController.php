@@ -62,29 +62,45 @@ class AdminController extends Controller
                 'admin_name' => 'required|regex:/^[\pL\s\-]+$/u',
                 'admin_mobile' => 'required|numeric',
             ];
-            $this->validate($request, $rules);
+            $customMessages = [
+                'admin_name.required' => 'Name is required',
+                'admin_name.regex' => 'Valid Name is required',
+                'admin_mobile.required' => 'Mobile is required',
+                'admin_mobile.numeric' => ' Valid Mobile is required',
+
+            ];
+            $this->validate($request, $rules, $customMessages);
 
            //Upload Admin Photo
 
         // Check if the request object has a file called 'admin_image'
         if ($request->hasFile('admin_image')) {
+
         // Retrieve the file and store it in the $image_tmp variable
         $image_tmp = $request->file('admin_image');
+
          // Check if the file is valid
         if ($image_tmp->isValid()) {
+
         // Get the file extension
         $extension = $image_tmp->getClientOriginalExtension();
+
         // Generate a new name for the image using a random number and the file extension
         $imageName = rand(111, 99999) . '.' . $extension;
+
         // Create a file path for the image
         $imagePath = 'admin/images/photos/' . $imageName;
+
        // Use the Image class to create an image object from the file and save it to the specified path
         Image::make($image_tmp)->save($imagePath);
        }
        //Ignore Image when not updating Image
       }else  if(!empty($data['current_admin_image'])){
+
         $imageName = $data['current_admin_image'];
+
      }else {
+        
         $imageName = "";
 
 
