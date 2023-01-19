@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Admin;
 use Hash;
 use Auth;
+use Image;
 
 
 class AdminController extends Controller
@@ -61,10 +62,38 @@ class AdminController extends Controller
                 'admin_name' => 'required|regex:/^[\pL\s\-]+$/u',
                 'admin_mobile' => 'required|numeric',
             ];
-            $this->validate($request, $rules); 
+            $this->validate($request, $rules);
+
+           //Upload Admin Photo
+
+        // Check if the request object has a file called 'admin_image'
+        if ($request->hasFile('admin_image')) {
+        // Retrieve the file and store it in the $image_tmp variable
+        $image_tmp = $request->file('admin_image');
+         // Check if the file is valid
+        if ($image_tmp->isValid()) {
+        // Get the file extension
+        $extension = $image_tmp->getClientOriginalExtension();
+        // Generate a new name for the image using a random number and the file extension
+        $imageName = rand(111, 99999) . '.' . $extension;
+        // Create a file path for the image
+        $imagePath = 'admin/images/photos/' . $imageName;
+       // Use the Image class to create an image object from the file and save it to the specified path
+        Image::make($image_tmp)->save($imagePath);
+       }
+       //Ignore Image when not updating Image
+      }else  if(!empty($data['current_admin_image'])){
+        $imageName = $data['current_admin_image'];
+     }else {
+        $imageName = "";
+
+
+     }
+
+
             //Update Admin Details
             Admin::where('id',Auth::guard('admin')->user()->id)->update(['name'=>$data['admin_name'],
-             'mobile'=>$data['admin_mobile'], 'email'=>$data['admin_email'], 'image'=>$data['admin_image']]);
+             'mobile'=>$data['admin_mobile'], 'email'=>$data['admin_email'], 'image'=>$imageName]);
              return redirect()->back()->with('success_message', 'Admin Details Updated Successfully!');
         }
         return view('admin.settings.update_admin_details');

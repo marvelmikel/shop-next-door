@@ -32,7 +32,7 @@
             <div class="col-md-6 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Update Admin Password</h4>
+                  <h4 class="card-title">Update Admin Details</h4>
 
                   @if(Session::has('error_message'))
                   <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -65,7 +65,7 @@
               </div>
               @endif
 
-                  <form class="forms-sample" action="{{ url('admin/update-admin-details') }}" method="post">
+                  <form class="forms-sample" action="{{ url('admin/update-admin-details') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                       <label>Admin Email</label>
@@ -85,8 +85,15 @@
                         <input type="text" class="form-control" value="{{Auth::guard('admin')->user()->mobile}}" id="admin_mobile" name="admin_mobile" placeholder="Enter New Password" required="">
                       </div>
                     <div class="form-group">
-                      <label for="admin_image">Image</label>
-                      <input type="file" class="form-control" id="admin_image" name="admin_image" required="">
+                      <label for="admin_image">Admin Photo</label>
+                      <input type="file" class="form-control" id="admin_image" name="admin_image">
+                      <br/>
+
+                      @if (!empty(Auth::guard('admin')->user()->image))
+                      <button class="btn btn-light"> <a target="_black" href="{{ url('admin/images/photos/'.Auth::guard('admin')->user()->image) }}">View Image</a></button>
+                      <input type="hidden" name="current_admin_image" value="{{ Auth::guard('admin')->user()->image }}">
+                      @endif
+
                     </div>
                     <button  type="submit" class="btn btn-primary mr-2">Submit</button>
                     {{-- <button class="btn btn-light">Cancel</button> --}}
