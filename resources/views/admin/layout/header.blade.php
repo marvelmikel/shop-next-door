@@ -80,6 +80,7 @@
                 <img src="{{ url('admin/images/photos/'.Auth::guard('admin')->user()->image)}}" alt="profile"/>
                 </a>
                 @endif
+                
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                     <a href="{{ url ('admin/update-admin-details') }}" class="dropdown-item">
                     <i class="ti-settings text-primary"></i>
